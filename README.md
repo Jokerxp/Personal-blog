@@ -1,17 +1,17 @@
 # Personal-blog
 A personal blog based on Spring Boot
 
-#Introduction
+# Introduction
 
 A personal blog based on Spring Boot
 
-#Front-end
+### Front-end
 1. UI framework: Semantic UI
 2. Markdown editor: editormd.js
 3. Animation: animate.js
 4. Typesetting: typo.css
 
-#Back-end
+### Back-end
 1. Main: Spring Boot & Thymeleaf
 2. database: MySQL
 3. Persistence layer: JPA
