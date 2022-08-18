@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="_fragments::head(~{::title})">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/blog.css" />
+    <title>KazeSword's Blog</title>
+  </head>
+  <body>
+    <!-- nav -->
+    <nav th:replace="_fragments::menu(0)" class="ui inverted segment nav-menu-padding m-shadow-small">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted secondary stackable menu">
+          <h2 class="ui red header first item">KazeSword</h2>
+          <a href="" class="m-item item item-size m-mobile-hide"
+            ><i class="home icon"></i>Front page</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide"
+            ><i class="idea icon"></i>Category</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide">
+            <i class="tags icon"></i>Tags</a>
+          <a href="" class="m-item item item-size m-mobile-hide">
+            <i class="clone icon"></i>Archive</a>
+          <a href="" class="m-item item item-size m-mobile-hide"
+            ><i class="info icon"></i>About me</a
+          >
+          <div class="m-item right item m-mobile-hide">
+            <div class="ui icon inverted transparent input">
+              <input type="text" placeholder="Search" />
+              <i class="search icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="ui black button m-right-top m-mobile-show" id="menu_button">
+        <i class="sidebar icon"></i>
+      </a>
+    </nav>
+    <div class="bg header-img m-mobile-hide"></div>
+    <div class="ui container container-width">
+      <div class="ui stackable grid content-padding">
+        <!-- left -->
+        <div th:replace="_fragments::left" class="three wide column right aligned">
+          <div>
+            <div class="ui card m-mobile-hide">
+              <div class="image">
+                <img src="../static/img/tanzhilang.jpeg" th:src="@{/img/tanzhilang.jpeg}" alt="" width="230px" />
+              </div>
+              <div class="content">
+                <div class="header center aligned">
+                  KazeSword
+                </div>
+              </div>
+              <div class="extra content center aligned">
+                <a href="" class="ui circular icon button"><i class="github icon"></i></a>
+                <a href="" class="ui circular icon button"><i class="facebook icon"></i></a>
+                <a href="" class="ui circular icon button"><i class="wechat icon"></i></a>
+                <a href="" class="ui circular icon button"><i class="google icon"></i></a>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+
+        <!-- mid -->
+        <div class="ten wide column">
+          <!-- header -->
+          <div class="ui top attached segment">
+            <div class="ui middle aligned two column grid">
+              <div class="column">
+                <span class="ui blue header" th:if="${issearch} ? 'Search result: '">Search result: </span><span class="m-font-size-large m-text-weight-large m-font-orange" th:text="${query}">Hello</span>
+              </div>
+              <div class="right aligned column mid-font-size">
+                <h2 class="ui blue header m-inline-block" th:text="${page.totalElements}">14</h2>
+                blogs in total
+              </div>
+            </div>
+          </div>
+
+          <!-- content -->
+          <div class="ui attached segment" th:fragment="content" style="min-height: 100px !important;">
+            <div class="ui padded vertical segment"  th:each="blog:${page.content}">
+              <div class="ui mobile reversed stackable grid">
+                <div class="sixteen wide column">
+                  <h2 class="ui header centered aligned">
+                    <a href="" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" style="color:black;" th:text="${blog.title}">A downloader api for qq music</a>
+                  </h2>
+                  <span class="ui red middle ribbon label" th:text="${blog.type.name}">Note</span>
+                  <div class="typo m-padding-tb-large m-margin-lr-large"><p class="m-text" th:text="|${blog.description}......|">Lorem.</p></div>
+                  <div>
+                    <a href="" target="-blank">
+                      <img
+                              src="https://picsum.photos/id/1000/800/500" th:src="@{${blog.firstPicture}}"
+                              alt=""
+                              class="ui rounded image centered aligned"
+                      />
+                    </a>
+                  </div>
+                  <div class="ui stackable grid m-margin-small">
+                    <div class="ten wide column">
+                      <div class="ui horizontal link list">
+                        <div class="item">
+                          <img
+                                  src="../static/img/icon.jpg" th:src="@{/img/icon.jpg}"
+                                  alt=""
+                                  class="ui avatar image"
+                          />
+                          <div class="content">
+                            <a href="" class="header" th:text="${blog.user.nickname}">KazeSword</a>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <i class="calendar icon"></i> <span th:text="${blog.updateTime} ? ${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-10-1</span>
+                        </div>
+                        <div class="item"><i class="eye icon"></i> <span th:text="${blog.views}">1</span></div>
+                      </div>
+                    </div>
+                    <div class="six wide column right aligned">
+                      <a href="" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank"  class="ui blue basic label mid-font-size"
+                      >Read full article</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- bottom -->
+          <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
+            <div class="ui middle aligned two column grid">
+              <div class="column">
+                <a href="" th:href="@{/(page=${page.number}-1)}" th:unless="${page.first}" class="ui blue basic button">Previous page</a>
+              </div>
+              <div class="right aligned column mid-font-size">
+                <a href="" th:href="@{/(page=${page.number}+1)}" th:unless="${page.last}" class="ui blue basic button">Next page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- right -->
+        <div th:replace="_fragments::right" class="three wide column">
+          <!-- Category -->
+          <div class="ui segments">
+            <div class="ui secondary segment">
+              <div class="ui two column grid">
+                <div class="column"><i class="icon idea"></i>Category</div>
+                <div class="right aligned column">
+                  <a href="" target="-blank"
+                    >more<i class="icon angle double right"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui border-orange segment">
+              <div class="ui menu vertical">
+                <a href="" class="item" th:each="type : ${types}"
+                  ><span th:text="${type.name}">Projects</span>
+                  <div class="ui blue basic label" th:text="${#arrays.length(type)} ? ${#arrays.length(type.blogs)}">0</div></a
+                >
+                <!--/*-->
+                <a href="" class="item"
+                  >Algorithm
+                  <div class="ui blue basic label">0</div></a
+                >
+                <a href="" class="item"
+                  >Data
+                  <div class="ui blue basic label">0</div></a
+                >
+                <a href="" class="item"
+                  >Notes
+                  <div class="ui blue basic label">0</div></a
+                >
+                <!--*/-->
+              </div>
+            </div>
+          </div>
+
+          <!-- Labels -->
+
+          <div class="ui segments">
+            <div class="ui secondary segment">
+              <div class="ui two column grid">
+                <div class="column"><i class="icon idea"></i>Labels</div>
+                <div class="right aligned column">
+                  <a href="" target="_blank"
+                    >more<i class="icon angle double right"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui segment border-orange m-padding-small" >
+              <a href="" class="ui label blue m-text-weight-500 m-margin-tiny" th:each="tag:${tags}"><span th:text="${tag.name}">Union set</span></a>
+              <!--/*-->
+              <a href="" class="ui label yellow m-text-weight-500 m-margin-tiny">DFS</a>
+              <a href="" class="ui label teal m-text-weight-500 m-margin-tiny">Queue</a>
+              <a href="" class="ui label purple m-text-weight-500 m-margin-tiny">ML</a>
+              <a href="" class="ui label orange m-text-weight-500 m-margin-tiny">DL</a>
+              <a href="" class="ui label pink m-text-weight-500 m-margin-tiny">Webspider</a>
+              <a href="" class="ui label red m-text-weight-500 m-margin-tiny">Python</a>
+              <a href="" class="ui label blue m-text-weight-500 m-margin-tiny">Java</a>
+              <a href="" class="ui label teal m-text-weight-500 m-margin-tiny">DP</a>
+              <a href="" class="ui label green m-text-weight-500 m-margin-tiny">Text classification</a>
+              <a href="" class="ui label brown m-text-weight-500 m-margin-tiny">Data analysis</a>
+              <!--*/-->
+            </div>
+          </div>
+          <div class="ui segments">
+            <div class="ui secondary segment">
+              <div class="ui grid">
+                <div class="nine wide column"><i class="icon idea"></i>Latest blogs</div>
+                <div class="right aligned seven wide column">
+                  <a href="" target="_blank"
+                  >more<i class="icon angle double right"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui border-orange segment" th:each="blog:${recommendBlogs}">
+              <a href="" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" th:text="${blog.title}">1</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+    <!-- footer -->
+    <footer th:replace="_fragments::footer" class="ui inverted vertical segment footer-item-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted divided stackable grid">
+          <div class="three wide column">
+            <img
+              src="../static/img/Facebook_QR.jpg"
+              class="ui image"
+              alt="Facebook QR"
+              style="width:150px;margin:0 auto";
+            />
+          </div>
+          <div class="four wide column">
+            <h3 class="ui inverted header">Want to learn about me?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                Just scan my Facebook QR on the left.
+              </p>
+            </div>
+          </div>
+          <div class="three wide column">
+            <h3 class="ui inverted header">Who am I?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                An ACGer who is fond of programming!!!
+              </p>
+              <img src="../static/img/umaru.jfif" alt="umaru" style="width: 130px" />
+            </div>
+          </div>
+          <div class="six wide column">
+            <h3 class="ui inverted header">About my Blog?</h3>
+            <div class="ui inverted link list"></div>
+            <p class="mid-font-size">
+              My blog aims to share my projects such as machine learning,
+              webspider and data analysis; Some data structure or algorithm
+              problems I met in life or online; Notes on my study like Java I
+              prepared to learn later in the future.
+            </p>
+          </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="copyright-text">Copyright @ 2021 designed by KazeSword</p>
+      </div>
+    </footer>
+    <script src="../static/js/jQuery.js" th:src="@{/js/jQuery.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script>
+      $("#menu_button").click(function(){
+        $(".m-item").toggleClass("m-mobile-hide");
+      });
+
+      $(".ui.dropdown").dropdown();
+    </script>
+  </body>
+</html>

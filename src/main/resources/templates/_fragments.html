@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:replace="${title}">Details page</title>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/blog.css" th:href="@{/css/blog.css}"/>
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}"/>
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}"/>
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}"/>
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}"/>
+
+</head>
+<body>
+<!-- nav-->
+<nav th:fragment="menu(n)" class="ui fixed inverted segment nav-menu-padding">
+    <div class="ui center aligned container container-width">
+        <div class="ui inverted secondary stackable menu">
+            <h3 class="ui red header first item">KazeSword</h3>
+            <a href="/frontpage" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"
+            ><i class="home icon"></i>Front page</a
+            >
+            <div class="ui dropdown item link m-padding-small">
+                <span href="" class="m-item item item-size m-mobile-hide" th:classappend="${n==2} ? 'active'"
+                >
+                    <i class="idea icon"></i>
+                    Category
+                    <i class="caret down icon"></i></span
+                >
+                <div class="menu">
+                    <a class="item" th:each="type:${types}" href=""
+                       th:href="@{/type/{id}(id=${type.id})}"><span
+                            th:text="${type.name}">Categories</span></a>
+                </div>
+            </div>
+
+            <a href="/tags/-1" class="m-item item item-size m-mobile-hide" th:classappend="${n==3} ? 'active'">
+                <i class="tags icon"></i>Tags</a
+            >
+            <a href="/archive" class="m-item item item-size m-mobile-hide" th:classappend="${n==4} ? 'active'">
+                <i class="clone icon"></i>Archive</a
+            >
+            <a href="/about" class="m-item item item-size m-mobile-hide" th:classappend="${n==5} ? 'active'"
+            ><i class="info icon"></i>About me</a
+            >
+            <div class="m-item right item m-mobile-hide">
+                <form action="" th:action="@{/frontpage/search}" name="search" method="post">
+                    <div class="ui icon inverted transparent input">
+                        <input type="text" name="query" placeholder="Search"/>
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a
+            href="#"
+            class="ui black button m-right-top m-mobile-show"
+            id="menu_button"
+    >
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--left-->
+<div th:fragment="left" class="three wide column right aligned">
+    <div>
+        <div class="ui card m-mobile-hide">
+            <div class="image">
+                <img src="../static/img/tanzhilang.jpeg" th:src="@{/img/tanzhilang.jpeg}" alt="" width="230px" />
+            </div>
+            <div class="content">
+                <div class="header center aligned">
+                    KazeSword
+                </div>
+            </div>
+            <div class="extra content center aligned">
+                <a href="" class="ui circular icon button"><i class="github icon"></i></a>
+                <a href="" class="ui circular icon button"><i class="facebook icon"></i></a>
+                <a href="" class="ui circular icon button"><i class="wechat icon"></i></a>
+                <a href="" class="ui circular icon button"><i class="google icon"></i></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- right -->
+<div th:fragment="right" class="three wide column">
+    <!-- Category -->
+    <div class="ui segments">
+        <div class="ui secondary segment">
+            <div class="ui two column grid">
+                <div class="column"><i class="icon idea"></i>Category</div>
+            </div>
+        </div>
+
+        <div class="ui border-orange segment">
+            <div class="ui menu vertical">
+                <div th:each="type : ${types}">
+                    <a href="" th:href="@{/type/{id}(id=${type.id})}" class="item"><span th:text="${type.name}">Projects</span>
+                    <div class="ui blue basic label" th:text="${#arrays.length(type)} ? ${#arrays.length(type.blogs)}">0</div>
+                    </a>
+                </div>
+
+                <!--/*-->
+                <a href="" class="item"
+                >Algorithm
+                    <div class="ui blue basic label">0</div></a
+                >
+                <a href="" class="item"
+                >Data
+                    <div class="ui blue basic label">0</div></a
+                >
+                <a href="" class="item"
+                >Notes
+                    <div class="ui blue basic label">0</div></a
+                >
+                <!--*/-->
+            </div>
+        </div>
+    </div>
+
+    <!-- Labels -->
+
+    <div class="ui segments">
+        <div class="ui secondary segment">
+            <div class="ui two column grid">
+                <div class="column"><i class="icon idea"></i>Labels</div>
+            </div>
+        </div>
+
+        <div class="ui segment border-orange m-padding-small" >
+            <span th:each="tag:${tags}">
+                <a href="" th:href="@{/tags/{id}(id=${tag.id})}" class="ui label m-text-weight-500 m-margin-tiny" th:classappend="${tag.color}"><span th:text="${tag.name}">Union set</span></a>
+            </span>
+            <!--/*-->
+            <a href="" class="ui label yellow m-text-weight-500 m-margin-tiny">DFS</a>
+            <a href="" class="ui label teal m-text-weight-500 m-margin-tiny">Queue</a>
+            <a href="" class="ui label purple m-text-weight-500 m-margin-tiny">ML</a>
+            <a href="" class="ui label orange m-text-weight-500 m-margin-tiny">DL</a>
+            <a href="" class="ui label pink m-text-weight-500 m-margin-tiny">Webspider</a>
+            <a href="" class="ui label red m-text-weight-500 m-margin-tiny">Python</a>
+            <a href="" class="ui label blue m-text-weight-500 m-margin-tiny">Java</a>
+            <a href="" class="ui label teal m-text-weight-500 m-margin-tiny">DP</a>
+            <a href="" class="ui label green m-text-weight-500 m-margin-tiny">Text classification</a>
+            <a href="" class="ui label brown m-text-weight-500 m-margin-tiny">Data analysis</a>
+            <!--*/-->
+        </div>
+    </div>
+    <div class="ui segments">
+        <div class="ui secondary segment">
+            <div class="ui grid">
+                <div class="nine wide column"><i class="icon idea"></i>Latest blogs</div>
+                <div class="right aligned seven wide column">
+                    <a href="" target="_blank"
+                    >more<i class="icon angle double right"></i
+                    ></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui border-orange segment" th:each="blog:${recommendBlogs}">
+            <a href="" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" th:text="${blog.title}">1</a>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<footer th:fragment="footer" class="ui inverted vertical segment footer-item-padding">
+    <div class="ui center aligned container container-width">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img
+                        src="../static/img/Facebook_QR.jpg" th:src="@{/img/Facebook_QR.jpg}"
+                        class="ui image"
+                        alt="Facebook QR"
+                        style="width:150px;margin:0 auto" ;
+                />
+            </div>
+            <div class="four wide column">
+                <h3 class="ui inverted header">Want to learn about me?</h3>
+                <div class="ui inverted link list">
+                    <p class="footer-content-text">
+                        Just scan my Facebook QR on the left.
+                    </p>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h3 class="ui inverted header">Who am I?</h3>
+                <div class="ui inverted link list">
+                    <p class="footer-content-text">
+                        An ACGer who is fond of programming!!!
+                    </p>
+                    <img src="../static/img/umaru.jfif" th:src="@{/img/umaru.jfif}" alt="umaru" style="width: 130px"/>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h3 class="ui inverted header">About my Blog?</h3>
+                <div class="ui inverted link list"></div>
+                <p class="mid-font-size">
+                    My blog aims to share my projects such as machine learning,
+                    webspider and data analysis; Some data structure or algorithm
+                    problems I met in life or online; Notes on my study like Java I
+                    prepared to learn later in the future.
+                </p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="copyright-text">Copyright @ 2021 designed by KazeSword</p>
+    </div>
+</footer>
+</body>
+
+
+</html>

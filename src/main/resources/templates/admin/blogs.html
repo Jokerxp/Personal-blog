@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="admin/_fragments::head(~{::title})">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="Blogs management"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="../../static/css/blog.css" />
+    <title>Blogs</title>
+  </head>
+  <body>
+    <!-- nav-->
+    <nav th:replace="admin/_fragments::menu(1)" class="ui inverted segment nav-menu-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted secondary stackable menu">
+          <h2 class="ui red header first item">Back-end</h2>
+          <a href="" class="active m-item item item-size m-mobile-hide"
+            ><i class="home icon"></i>Blogs</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide"
+            ><i class="idea icon"></i>Category</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide">
+            <i class="tags icon"></i>Tags</a
+          >
+          <div class="right menu">
+            <div class="ui dropdown item">
+              <div class="text">
+                <img src="../../static/img/icon.jpg" class="ui avatar image" alt="">
+                  KazeSword
+              </div>
+              <i class="dropdown icon"></i>
+              <div class="menu inverted">
+                <a href="" class="item">Log out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <a
+        href="#"
+        class="ui black button m-right-top m-mobile-show"
+        id="menu_button"
+      >
+        <i class="sidebar icon"></i>
+      </a>
+    </nav>
+
+    <div class="ui attached pointing menu">
+      <div class="ui container">
+        <div class="right menu">
+          <a href="" th:href="@{/admin/blogs}" class="active purple item">List</a>
+          <a href="" th:href="@{/admin/blogs/input}" class="item">Release</a>
+        </div>
+      </div>
+    </div>
+    <div class="m-blog-container">
+      <div class="ui container container-width-category">
+        <div class="ui secondary segment form">
+          <input type="hidden" name="page">
+          <div class="inline fields">
+            <div class="field">
+              <input type="text" name="title" placeholder="Title">
+            </div>
+            <div class="field">
+              <div class="ui labeled action input">
+                  <div class="ui type selection dropdown">
+                      <input type="hidden" name="typeId">
+                      <i class="icon dropdown"></i>
+                      <div class="default text">
+                          Category
+                      </div>
+                      <div class="ui menu">
+                          <div th:each="type:${types}" class="item" data-value='1' th:data-value="${type.id}" th:text="${type.name}">Error log</div>
+                          <!--/*-->
+                          <div class="item data-value='2'">Development log</div>
+                          <!--*/-->
+                      </div>
+                  </div>
+                  <button class="ui clear button">Clear</button>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="recommend" id="recommend">
+                <label for="recommend">Recommend</label>
+              </div>
+            </div>
+            <div class="field">
+              <button type="button" id="search-button" class="ui mini blue basic button"><i class="icon search"></i>Search</button>
+            </div>
+          </div>
+        </div>
+        <div id="table-container">
+          <table th:fragment="blogList" class="ui table compact center aligned">
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Recommend</th>
+              <th>Release</th>
+              <th>Update time</th>
+              <th>Operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="blog,iterStat:${page.content}">
+              <td th:text="${iterStat.count}">1</td>
+              <td th:text="${blog.title}">My first blog</td>
+              <td th:text="${blog.type.name}">2</td>
+              <td th:text="${blog.recommend} ? 'Yes' : 'No'">Yes</td>
+              <td th:text="${blog.published} ? 'Published' : 'Unpublished'">Published</td>
+              <td th:text="${blog.updateTime}">2</td>
+              <td>
+                <a href="" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui small blue button">Edit</a>
+                <a href="" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui small red button">Delete</a>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th colspan="7">
+                <div class="ui pagination menu" th:if="${page.totalPages}>1">
+                  <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Last page</a>
+                  <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next page</a>
+                </div>
+                <a href="" th:href="@{/admin/blogs/input}" class="ui small right floated blue basic button">Add</a>
+              </th>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">Note:</div>
+            <p th:text="${message}">Operation failed</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- footer -->
+    <footer th:replace="admin/_fragments::footer" class="ui inverted vertical segment footer-item-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted divided stackable grid">
+          <div class="three wide column">
+            <img
+              src="../../static/img/Facebook_QR.jpg"
+              class="ui image"
+              alt="Facebook QR"
+              style="width: 150px; margin: 0 auto"
+              ;
+            />
+          </div>
+          <div class="four wide column">
+            <h3 class="ui inverted header">Want to learn about me?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                Just scan my Facebook QR on the left.
+              </p>
+            </div>
+          </div>
+          <div class="three wide column">
+            <h3 class="ui inverted header">Who am I?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                An ACGer who is fond of programming!!!
+              </p>
+              <img src="../../static/img/umaru.jfif" alt="umaru" style="width: 130px" />
+            </div>
+          </div>
+          <div class="six wide column">
+            <h3 class="ui inverted header">About my Blog?</h3>
+            <div class="ui inverted link list"></div>
+            <p class="mid-font-size">
+              My blog aims to share my projects such as machine learning,
+              webspider and data analysis; Some data structure or algorithm
+              problems I met in life or online; Notes on my study like Java I
+              prepared to learn later in the future.
+            </p>
+          </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="copyright-text">Copyright @ 2021 designed by KazeSword</p>
+      </div>
+    </footer>
+    <script src="../../static/js/jQuery.js" th:src="@{/js/jQuery.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+    <script>
+      $("#menu_button").click(function () {
+        $(".m-item").toggleClass("m-mobile-hide");
+      });
+
+      $(".ui.dropdown").dropdown({
+        on: "hover",
+      });
+
+      function page(obj){
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+      }
+
+      $(".clear").on("click",function(){
+          $(".type").dropdown("clear");
+      });
+
+      $("#search-button").click(function(){
+        $("[name='page']").val(0);
+        loaddata();
+      });
+
+      function loaddata(){
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+          title :$("[name='title']").val(),
+          typeId:$("[name='typeId']").val(),
+          recommend:$("[name='recommend']").prop("checked"),
+          page:$("[name='page']").val()
+        })
+      }
+
+      $(".message .close").on("click", function(){
+        $(this).closest(".message").transition("fade");
+      });
+
+    </script>
+  </body>
+</html>

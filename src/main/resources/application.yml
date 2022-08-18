@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+  messages:
+    basename: messages
+
+
+comment.avatar: /img/Others.png

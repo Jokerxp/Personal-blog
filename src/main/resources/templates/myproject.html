@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project List</title>
+    <meta name="description" content="Peng Xie's project list" />
+    <link rel="stylesheet" href="../static/css/project.css" />
+    <script type="text/javascript" src="../static/js/jQuery.js"></script>
+    <style>
+      body {
+        font-size: 18px;
+        color: #6c767d;
+        background-color: #ebf1f5;
+        background-attachment: fixed;
+        /*background-image: url("background.jpg");*/
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        min-height: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <input type="checkbox" id="c1" />
+      <label for="c1">
+        <img src="../static/img/sidebar.png" alt="sidebar" />
+      </label>
+      <ul class="sidebar_list">
+        <li><span>My Project</span></li>
+        <li>
+          <a href="#WebSpider"
+            ><img src="../static/img/Webspider.png" alt="Webspider" /><span
+              >Webspider</span
+            ></a
+          >
+        </li>
+        <li>
+          <a href="#"
+            ><img src="../static/img/Deep Learning.jpg" alt="Machine Learning" /><span
+              >Deep Learning</span
+            ></a
+          >
+        </li>
+        <li>
+          <a href="#"
+            ><img src="../static/img/Statistics.png" alt="Statistics" /><span
+              >Statistics Models</span
+            ></a
+          >
+        </li>
+        <li>
+          <a href="#"
+            ><img src="../static/img/Leetcode.png" alt="Leetcode" /><span
+              >Leetcode</span
+            ></a
+          >
+        </li>
+        <li>
+          <a href="#"
+            ><img src="../static/img/Others.png" alt="Others" /><span>Others</span></a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="content">
+      <div class="content_list" id="c2">
+        <div>
+          <fieldset>
+            <legend>
+              <h2>Machine Learning</h2>
+            </legend>
+            <table>
+              <tbody>
+                <th>
+                  <td>Description</td>
+                  <td>Link</td>
+                </th>
+                <tr>
+                  <td>A Downloader API for QQmusic</td>
+                  <td><a href="../static/files/QQmusic_downloader_api.zip">QQmusic_downloader_api.zip</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+        </div> 
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../static/js/myproject.js"></script>
+</html>

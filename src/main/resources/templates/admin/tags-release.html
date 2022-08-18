@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="admin/_fragments::head(~{::title})">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="Tag release"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/blog.css" />
+    <title>Tag Release</title>
+  </head>
+  <body>
+    <!-- nav-->
+    <nav th:replace="admin/_fragments::menu(0)" class="ui inverted segment nav-menu-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted secondary stackable menu">
+          <h2 class="ui red header first item">Back-end</h2>
+          <a href="" class="active m-item item item-size m-mobile-hide"
+            ><i class="home icon"></i>Blogs</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide"
+            ><i class="idea icon"></i>Category</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide">
+            <i class="tags icon"></i>Tags</a
+          >
+          <div class="right menu">
+            <div class="ui dropdown item">
+              <div class="text">
+                <img src="../../static/img/icon.jpg" class="ui avatar image" alt="">
+                  KazeSword 
+              </div>
+              <i class="dropdown icon"></i>
+              <div class="menu inverted">
+                <a href="" class="item">Log out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <a
+        href="#"
+        class="ui black button m-right-top m-mobile-show"
+        id="menu_button"
+      >
+        <i class="sidebar icon"></i>
+      </a>
+    </nav>
+
+    <div class="ui attached pointing menu">
+      <div class="ui container">
+        <div class="right menu">
+          <a href="" th:href="@{/admin/tags/input}" class="item active">Add</a>
+          <a href="" th:href="@{/admin/tags/}" class="item purple">List</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-blog-container m-margin-massive">
+      <div class="ui container container-width-category">    
+        <form action="" method="post" th:object="${tag}" th:action="*{id}==0 ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})}" class="ui form">
+          <div class="required field">
+            <div class="ui left labeled input">
+                <label class="ui teal basic label">Name</label>
+                <input type="text" name="name" placeholder="Tag name" th:value="*{name}">
+            </div>
+          </div>
+
+          <div class="ui error message"></div>
+          <!--/*/
+          <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+              <i class="close icon"></i>
+              <div class="header">Verification failed</div>
+              <p th:errors="*{name}">Submittion does not follow the rules!</p>
+          </div>
+          /*/-->
+          <div class="ui right aligned container">
+            <button type="button" class="ui button" onclick="window.history.go(-1)">Return</button>
+            <button class="ui submit blue button">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- footer -->
+    <footer th:replace="admin/_fragments::footer" class="ui inverted vertical segment footer-item-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted divided stackable grid">
+          <div class="three wide column">
+            <img
+              src="../../static/img/Facebook_QR.jpg"
+              class="ui image"
+              alt="Facebook QR"
+              style="width: 150px; margin: 0 auto"
+              ;
+            />
+          </div>
+          <div class="four wide column">
+            <h3 class="ui inverted header">Want to learn about me?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                Just scan my Facebook QR on the left.
+              </p>
+            </div>
+          </div>
+          <div class="three wide column">
+            <h3 class="ui inverted header">Who am I?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                An ACGer who is fond of programming!!!
+              </p>
+              <img src="../../static/img/umaru.jfif" alt="umaru" style="width: 130px" />
+            </div>
+          </div>
+          <div class="six wide column">
+            <h3 class="ui inverted header">About my Blog?</h3>
+            <div class="ui inverted link list"></div>
+            <p class="mid-font-size">
+              My blog aims to share my projects such as machine learning,
+              webspider and data analysis; Some data structure or algorithm
+              problems I met in life or online; Notes on my study like Java I
+              prepared to learn later in the future.
+            </p>
+          </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="copyright-text">Copyright @ 2021 designed by KazeSword</p>
+      </div>
+    </footer>
+    <script src="../../static/js/jQuery.js" th:src="@{/js/jQuery.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script>
+      $("#menu_button").click(function () {
+        $(".m-item").toggleClass("m-mobile-hide");
+      });
+
+      $(".ui.dropdown").dropdown({
+        on: "hover",
+      });
+
+      $(".ui.form").form({
+        fields:{
+          title:{
+            identifier:"name",
+            rules:[{
+              type:"empty",
+              prompt:"Please input a tag."
+            }]
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

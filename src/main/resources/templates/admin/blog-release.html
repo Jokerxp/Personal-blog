@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="admin/_fragments::head(~{::title})">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="Blog release"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/blog.css" />
+    <title>Blog release</title>
+  </head>
+  <body>
+    <!-- nav-->
+    <nav th:replace="admin/_fragments::menu(1)" class="ui inverted segment nav-menu-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted secondary stackable menu">
+          <h2 class="ui red header first item">Back-end</h2>
+          <a href="" class="active m-item item item-size m-mobile-hide"
+            ><i class="home icon"></i>Blogs</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide"
+            ><i class="idea icon"></i>Category</a
+          >
+          <a href="" class="m-item item item-size m-mobile-hide">
+            <i class="tags icon"></i>Tags</a
+          >
+          <div class="right menu">
+            <div class="ui dropdown item">
+              <div class="text">
+                <img src="../../static/img/icon.jpg" class="ui avatar image" alt="">
+                  KazeSword 
+              </div>
+              <i class="dropdown icon"></i>
+              <div class="menu inverted">
+                <a href="" class="item">Log out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <a
+        href="#"
+        class="ui black button m-right-top m-mobile-show"
+        id="menu_button"
+      >
+        <i class="sidebar icon"></i>
+      </a>
+    </nav>
+
+    <div class="ui attached pointing menu">
+      <div class="ui container">
+        <div class="right menu">
+          <a href="" th:href="@{/admin/blogs}" class="item">List</a>
+          <a href="" th:href="@{/admin/blogs/input}" class="active purple item">Release</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-blog-container">
+      <div class="ui container container-width-category">    
+        <form id="blog-form" action="" th:object="${blog}" th:action="@{/admin/blogs}" method="post" class="ui form">
+          <input type="hidden" name="published">
+          <input type="hidden" name="id" th:value="*{id}">
+          <div class="required field">
+            <div class="ui left labeled input">
+              <div class="ui selection compact blue basic dropdown label">
+                <input type="hidden" value="Original" name="flag" th:value="*{flag}">
+                <i class="icon dropdown"></i>
+                <div class="text">Original</div>
+                <div class="ui menu">
+                  <div class="item" data-value="Original">Original</div>
+                  <div class="item" data-value="Reprint">Reprint</div>
+                  <div class="item" data-value="Translation">Translation</div>
+                </div>
+              </div>
+              <input type="text" name="title" placeholder="Title" th:value="*{title}">
+            </div>           
+          </div>
+
+          <div class="required field">
+            <div id="md-content" style="z-index:1 !important">
+              <textarea name="content" th:text="*{content}" id="" cols="30" rows="15" placeholder="Content" style="display:none"></textarea>
+            </div>
+          </div>
+
+          <div class="two fields">
+            <div class="required field">
+              <div class="ui left labeled action input">
+                <label class="ui compact blue basic label">Type</label>
+                <div class="ui fluid selection dropdown">
+                  <input type="hidden" name="type.id" th:value="*{type}!=null ? *{type.id}">
+                  <i class="icon dropdown"></i>
+                  <div class="default text">Type</div>
+                  <div class="ui menu">
+                    <div th:each="type:${types}" class="item" data-value='1' th:data-value="${type.id}" th:text="${type.name}">Error log</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left labeled action input">
+                <label class="ui compact blue basic label">Tag</label>
+                <div class="ui fluid multiple search selection dropdown">
+                  <input type="hidden" name="tagIds" th:value="*{tagIds}">
+                  <i class="icon dropdown"></i>
+                  <div class="default text">Tag</div>
+                  <div class="ui menu">
+                    <div th:each="tag:${tags}" class="item" data-value='1' th:data-value="${tag.id}" th:text="${tag.name}">Error log</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="ui left labeled input">
+                <label class="ui teal basic label">Picture</label>
+                <input type="text" name="firstPicture" th:value="*{firstPicture}" placeholder="Picture address">
+            </div>
+          </div>
+
+          <div class="required field">
+            <textarea name="description" th:text="*{description}" cols="30" rows="10" placeholder="Descripion" maxlength="200"></textarea>
+          </div>
+
+          <div class="inline fields">
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="recommend" id="recommend" checked="checked" th:checked="*{recommend}" class="hidden">
+                <label for="recommend" class="m-release-label">Recommend</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="shareStatement" id="shareStatement" th:checked="*{shareStatement}" class="hidden">
+                <label for="shareStatement" class="m-release-label">Shareinformation</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="appreciation" id="appreciation" th:checked="*{appreciation}" class="hidden">
+                <label for="appreciation" class="m-release-label">Evaluate</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" name="commentable" id="commentable" th:checked="*{commentable}" class="hidden">
+                <label for="commentable" class="m-release-label">Comment</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="ui error message"></div>
+
+          <div class="ui right aligned container">
+            <button type="button" class="ui button" onclick="window.history.go(-1)">Return</button>
+            <button type="button" id="save-button" class="ui secondary button">Save</button>
+            <button type="button" id="publish-button" class="ui blue button">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- footer -->
+    <footer th:replace="admin/_fragments::footer" class="ui inverted vertical segment footer-item-padding">
+      <div class="ui center aligned container container-width">
+        <div class="ui inverted divided stackable grid">
+          <div class="three wide column">
+            <img
+              src="../../static/img/Facebook_QR.jpg"
+              class="ui image"
+              alt="Facebook QR"
+              style="width: 150px; margin: 0 auto"
+              ;
+            />
+          </div>
+          <div class="four wide column">
+            <h3 class="ui inverted header">Want to learn about me?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                Just scan my Facebook QR on the left.
+              </p>
+            </div>
+          </div>
+          <div class="three wide column">
+            <h3 class="ui inverted header">Who am I?</h3>
+            <div class="ui inverted link list">
+              <p class="footer-content-text">
+                An ACGer who is fond of programming!!!
+              </p>
+              <img src="../../static/img/umaru.jfif" alt="umaru" style="width: 130px" />
+            </div>
+          </div>
+          <div class="six wide column">
+            <h3 class="ui inverted header">About my Blog?</h3>
+            <div class="ui inverted link list"></div>
+            <p class="mid-font-size">
+              My blog aims to share my projects such as machine learning,
+              webspider and data analysis; Some data structure or algorithm
+              problems I met in life or online; Notes on my study like Java I
+              prepared to learn later in the future.
+            </p>
+          </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="copyright-text">Copyright @ 2021 designed by KazeSword</p>
+      </div>
+    </footer>
+    <script src="../../static/js/jQuery.js" th:src="@{/js/jQuery.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+    <script type="text/javascript">
+
+      // initialize Markdown
+			var contentEditor;
+
+            $(function() {
+                testEditor = editormd("md-content", {
+                    width   : "100%",
+                    height  : 640,
+                    syncScrolling : "single",
+                    // path    : "../static/lib/editormd/lib/"
+                    path    : "/lib/editormd/lib/",
+                    tex: true,
+                    emoji: true,
+                    flowChart: true,
+                    taskList: true,
+                    codeFold : true,
+                });
+                
+                /*
+                // or
+                testEditor = editormd({
+                    id      : "test-editormd",
+                    width   : "90%",
+                    height  : 640,
+                    path    : "../lib/"
+                });
+                */
+            });
+
+
+        </script>
+
+    <script>
+      $("#menu_button").click(function () {
+        $(".m-item").toggleClass("m-mobile-hide");
+      });
+
+      $(".ui.dropdown").dropdown({
+        on: "hover",
+        allowAdditions:true,
+      });
+
+      $("#save-button").click(function(){
+        $("[name='published']").val(false);
+        $("#blog-form").submit();
+      })
+
+      $("#publish-button").click(function(){
+        $("[name='published']").val(true);
+        $("#blog-form").submit();
+      })
+
+
+
+      $(".ui.form").form({
+        fields:{
+          title:{
+            identifier:"title",
+            rules:[{
+              type:"empty",
+              prompt:"Please input blog title."
+            }]
+          },
+          content:{
+            identifier:"content",
+            rules:[{
+              type:"empty",
+              prompt:"Please input blog content."
+            }]
+          },
+          typeId:{
+            identifier:"type.id",
+            rules:[{
+              type:"empty",
+              prompt:"Please choose blog type."
+            }]
+          },
+          // firstPicture:{
+          //   identifier:"firstPicture",
+          //   rules:[{
+          //     type:"Empty",
+          //     prompt:"Lack of picture."
+          //   }]
+          // },
+        }
+      })
+    </script>
+  </body>
+</html>

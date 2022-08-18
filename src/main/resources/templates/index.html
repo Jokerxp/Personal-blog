@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Kaze's Home Page</title>
+    <meta name="description" content="KazeSword's home page, a blog to share my life.">
+    <link rel="stylesheet" href="../static/css/homepage.css" th:href="@{/css/homepage.css}">
+    <style>
+    body {
+        font-size: 18px;
+        color:#6c767d;
+        background-color: #ebf1f5;
+        background-attachment: fixed;
+        /*background-image: url("background.jpg");*/
+        background-repeat: no-repeat;
+        background-size: cover;
+        height:100vh;
+        min-height: 800px;
+    } 
+    
+
+    </style>
+</head>
+<body>
+    <div class="hp-main"> 
+        <video autoplay muted loop>
+            <source src="../static/video/backgroud_video.mp4" th:src="@{/video/backgroud_video.mp4}">
+        </video>
+        <audio id="music" autoplay loop> 
+            <source src="../static/music/Illusionary Daytime-Shirfine.mp4" th:src="@{/music/Illusionary Daytime-Shirfine.mp4}">
+        </audio>
+        <div class="hp-main-inner hp-inverted">
+            <div class="hp-main-content">
+                <img src="../static/img/icon.jpg" th:src="@{/img/icon.jpg}" width="150" alt="LOGO" class="hp-cover-logo logo">
+                <h1 class="hp-title">KazeSword</h1>
+                <span class="hp-cover__subtitle hp-subtitle">
+        <hr class="hp-cover-divider">
+        <p class="hp-cover-description">Stay Hungry, Stay Foolish</p>
+        <hr class="hp-cover-divider"> 
+        <p class="hp-cover-description">Welcome to my Blog！</p>
+        <hr class="hp-cover-divider"> 
+        <div class="hp-button">
+            <a href="/frontpage" title="Get in" >Get in</a>
+        </div>
+            </span>
+            </div>
+        </div>
+        
+        <div class="hp-cover-overlay cover-slate"></div>
+    </div>
+
+</body>
+<script>
+    window.onclick = function () { music.play(); }
+</script>
+</html>
+
+
+

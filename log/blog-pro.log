@@ -1,0 +1,5 @@
+2021-10-29 01:00:56.371  INFO 8128 --- [restartedMain] com.px.blog.BlogApplication              : Starting BlogApplication using Java 15.0.2 on DESKTOP-CQS73JJ with PID 8128 (F:\blog\target\classes started by 10219 in F:\blog)
+2021-10-29 01:00:56.372  INFO 8128 --- [restartedMain] com.px.blog.BlogApplication              : The following profiles are active: pro
+2021-10-29 01:00:57.772  WARN 8128 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-29 01:00:57.917  WARN 8128 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-10-29 01:00:58.001  INFO 8128 --- [restartedMain] com.px.blog.BlogApplication              : Started BlogApplication in 1.87 seconds (JVM running for 2.383)

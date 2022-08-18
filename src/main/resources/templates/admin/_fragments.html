@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:replace="${title}">Details page</title>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="../../static/css/blog.css" th:href="@{/css/blog.css}"/>
+    <link rel="stylesheet" href="../../static/css/typo.css" th:href="@{/css/typo.css}"/>
+    <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}"/>
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}"/>
+    <link rel="stylesheet" href="../../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}"/>
+
+</head>
+<body>
+<!-- nav-->
+<nav th:fragment="menu(n)" class="ui inverted segment nav-menu-padding">
+    <div class="ui center aligned container container-width">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui red header first item">Back-end</h2>
+            <a href="" th:href="@{/admin/blogs}" class="m-item item item-size m-mobile-hide" th:classappend="${n==1} ? 'active'"
+            ><i class="home icon"></i>Blogs</a
+            >
+            <a href="" th:href="@{/admin/types}" class="m-item item item-size m-mobile-hide" th:classappend="${n==2} ? 'active'"
+            ><i class="idea icon"></i>Category</a
+            >
+            <a href="" th:href="@{/admin/tags}" class="m-item item item-size m-mobile-hide" th:classappend="${n==3} ? 'active'">
+                <i class="tags icon"></i>Tags</a
+            >
+            <div class="right menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="../../static/img/icon.jpg" th:src="@{/img/icon.jpg}" class="ui avatar image" alt="">
+                        <span th:text="${session.user.nickname}">KazeSword</span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu inverted">
+                        <a href="#" th:href="@{/admin/logout}" class="item">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <a
+            href="#"
+            class="ui black button m-right-top m-mobile-show"
+            id="menu_button"
+    >
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!-- footer -->
+<footer th:fragment="footer" class="ui inverted vertical segment footer-item-padding">
+    <div class="ui center aligned container container-width">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img
+                        src="../../static/img/Facebook_QR.jpg" th:src="@{/img/Facebook_QR.jpg}"
+                        class="ui image"
+                        alt="Facebook QR"
+                        style="width:150px;margin:0 auto" ;
+                />
+            </div>
+            <div class="four wide column">
+                <h3 class="ui inverted header">Want to learn about me?</h3>
+                <div class="ui inverted link list">
+                    <p class="footer-content-text">
+                        Just scan my Facebook QR on the left.
+                    </p>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h3 class="ui inverted header">Who am I?</h3>
+                <div class="ui inverted link list">
+                    <p class="footer-content-text">
+                        An ACGer who is fond of programming!!!
+                    </p>
+                    <img src="../../static/img/umaru.jfif" th:src="@{/img/umaru.jfif}" alt="umaru" style="width: 130px"/>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h3 class="ui inverted header">About my Blog?</h3>
+                <div class="ui inverted link list"></div>
+                <p class="mid-font-size">
+                    My blog aims to share my projects such as machine learning,
+                    webspider and data analysis; Some data structure or algorithm
+                    problems I met in life or online; Notes on my study like Java I
+                    prepared to learn later in the future.
+                </p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="copyright-text">Copyright @ 2021 designed by KazeSword</p>
+    </div>
+</footer>
+</body>
+
+</html>
